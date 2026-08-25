@@ -1,0 +1,33 @@
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Stack;
+
+
+class Solution {
+    public List<Integer> postorderTraversal(TreeNode root) {
+        List<Integer> result = new ArrayList<>();
+        Stack<TreeNode> stack = new Stack<>();
+        TreeNode curr = root;
+        
+        TreeNode lastVisited = null; 
+
+        while (curr != null || !stack.isEmpty()) {
+            while (curr != null) {
+                stack.push(curr);
+                curr = curr.left;
+            }
+            TreeNode peekNode = stack.peek();
+
+            
+            if (peekNode.right != null && lastVisited != peekNode.right) {
+                curr = peekNode.right; 
+            } 
+            else {
+                result.add(peekNode.val); 
+                lastVisited = stack.pop();  
+            }
+        }
+
+        return result;
+    }
+}
